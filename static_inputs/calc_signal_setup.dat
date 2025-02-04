@@ -1,0 +1,9 @@
+# configuration file for signal calculation 
+# time specific stuff (fields & geometry have separate setup files)
+# time steps used in calculation and output should be related by
+# integer (compression) factor for best results
+500    # number of time steps used in calculations
+1.0    # length of time step, ns
+50     # number of time steps in output signal
+
+

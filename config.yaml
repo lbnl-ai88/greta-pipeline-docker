@@ -1,0 +1,48 @@
+# This is the overal configuration for the pipeline, it lays out each step
+# that the user wants to run, as well as specification for binaries to use,
+# necessary input data, and output directories
+
+# Entries can be absolute, or, RELATIVE TO THE LOCATION
+# OF THIS FILE
+
+inputs:
+  input_root: static_inputs # resolved at runtime
+  crystal_data: crystal_data.csv
+  detector_geometry_file: geometry_setup.dat
+  signal_calculation_configuration: calc_signal_setup.dat
+  drift_velocity_correction: drift_vel_tcorr.dat
+
+results_root: output
+
+pipeline:
+  impurity_scaling:
+    run: True
+    results_path: impurity_scaling
+    script_path: find_impurity_scaling.pl
+    binary: f3d_gretina
+  crystal_scaling_update: 
+    # Processes final impurity scaling, updates crystals and writes final
+    # field calc setup files in results_path
+    run: True
+    results_path: field_calc_setup
+  calculate_fields_and_potentials:
+    # Runs the field and weighing potential routine one final time on the 
+    # field calc setup files from the last step and places the results in 
+    # results_path/CRYSTAL_NAME (i.e. results_path/A01)
+    run: True
+    results_path: fields
+    binary: f3d_gretina
+  calculate_basis_at_grid: 
+    # Writes field_setup files that include the results of the previous step
+    # and runs mkgrid for each crystal and places field setup and results in
+    # results_path/CRYSTAL_NAME
+    run: True
+    results_path: basis_grid
+    binary: mkgrid
+  calculate_pristine_basis:
+    # Combines the grid files and basis files into a single pristine (raw) 
+    # basis file. Results path is currently unused; pristine raw basis files will
+    # be placed in the output of the basis_grid step.
+    run: True
+    results_path: pristine_basis
+    binary: grid+sig2basis
