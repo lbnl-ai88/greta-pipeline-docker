@@ -1,0 +1,13 @@
+services:
+  greta-pipeline:
+    image: jessicarehak/greta-pipeline:latest
+    user: root
+    volumes:
+      - ./config.yaml:/greta-pipeline/config.yaml:ro
+      - ./static_inputs:/greta-pipeline/static_inputs:ro
+      - type: bind
+        source: ./output
+        target: /greta-pipeline/output
+        bind: 
+          create_host_path: true
+
