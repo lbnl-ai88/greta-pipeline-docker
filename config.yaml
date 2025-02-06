@@ -5,8 +5,8 @@
 # Entries can be absolute, or, RELATIVE TO THE LOCATION
 # OF THIS FILE
 
-inputs:
-  input_root: static_inputs # resolved at runtime
+static_inputs:
+  static_input_root: static_inputs # resolved at runtime
   crystal_data: crystal_data.csv
   detector_geometry_file: geometry_setup.dat
   signal_calculation_configuration: calc_signal_setup.dat
@@ -15,8 +15,9 @@ inputs:
 results_root: output
 
 pipeline:
-  impurity_scaling:
-    run: True
+  crystal_impurity_scaling:
+    routine: impurity_scaling
+    run: False
     results_path: impurity_scaling
     script_path: find_impurity_scaling.pl
     binary: f3d_gretina
