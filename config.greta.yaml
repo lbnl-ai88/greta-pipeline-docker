@@ -5,6 +5,8 @@
 # Entries can be absolute, or, RELATIVE TO THE LOCATION
 # OF THIS FILE
 
+# yaml-language-server: $schema=./schemas/greta_schema.json
+
 static_inputs:
   static_input_root: static_inputs # resolved at runtime
   crystal_data: crystal_data.csv

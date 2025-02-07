@@ -1,0 +1,18 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "GRETA Basis Pipeline Input File",
+    "description": "An input file for the GRETA Basis Pipeline",
+    "type": "object",
+    "properties": {
+        "static_inputs": {
+            "type": "object",
+            "properties": {
+                "static_input_root": { "type": "string" },
+                "crystal_data": { "type": "string" },
+                "detector_geometry_file": { "type": "string" },
+                "signal_calculation_configuration": { "type": "string" },
+                "drift_velocity_correction": { "type": "string" }
+            }
+        }
+    }
+}
