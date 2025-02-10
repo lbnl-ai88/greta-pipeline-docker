@@ -6,6 +6,7 @@
     "properties": {
         "static_inputs": {
             "type": "object",
+            "description": "Static input files used by the Basis Pipeline",
             "properties": {
                 "static_input_root": { "type": "string" , "description": "A required root path for all static input files. If absolute paths are used for static inputs, use `/`."},
                 "crystal_data": { "type": "string" , "description": "Path to crystal data csv file, generally named crystal_data.csv."},
@@ -13,6 +14,42 @@
                 "signal_calculation_configuration": { "type": "string", "description": "Path to signal caculation configuration settings, generally named calc_signal_setup.dat." },
                 "drift_velocity_correction": { "type": "string", "description": "Path to drift velocity vector temperature correction, generally named drift_vel_tcorr.dat"}
             }
+        },
+        "results_root": {
+            "type": "string",
+            "description": "Root directory for all results files. Relative to location of configuration file."
+        },
+        "binary_root" : {
+            "type": "string",
+            "description": "Optional root directory for pipeline step binaries. If not included, the default of /usr/local/bin is used."
+        },
+        "pipeline": {
+            "type": "array",
+            "description": "Steps in the pipeline to follow.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Optional name of the step if you do not want to use the routine name"},
+                    "routine": { 
+                        "type": "string",
+                        "enum": [
+                            "impurity_scaling", 
+                            "crystal_scaling_update",
+                            "calculate_fields_and_potentials",
+                            "calculate_basis_at_grid",
+                            "calculate_pristine_basis",
+                            "generate_superpulse"
+                            ],
+                        "description": "Routine to run, limited to validated values" 
+                        },
+                    "run":  {
+                        "type": "boolean", 
+                        "description": "Boolean to determine if step is run. True will run the step, False will not."},
+                    "results_path": { "type": "string", "description": "Directory path relative to `results_root` to store the results of this step."},
+                    "binary": { "type": "string", "description": "Path of the binary to run for this step. Path is relative to binary_root, if set."}
+                }
+            }
         }
     }
+
 }
