@@ -3,7 +3,7 @@ services:
     image: ghcr.io/lbnl-ai88/greta-pipeline-docker:latest
     user: root
     volumes:
-      - ./config.greta.yaml:/greta-pipeline/config.yaml:ro
+      - ./config.greta.yaml:/greta-pipeline/config.greta.yaml:ro
       - ./static_inputs:/greta-pipeline/static_inputs:ro
       - type: bind
         source: ./output
