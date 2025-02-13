@@ -1,6 +1,6 @@
 services:
   greta-pipeline:
-    image: ghcr.io/lbnl-ai88/greta-pipeline-docker:1.0.0.alpha.1
+    image: ghcr.io/lbnl-ai88/greta-pipeline-docker:1.0.0-alpha.1
     user: root
     volumes:
       - ./config.greta.yaml:/greta-pipeline/config.greta.yaml:ro
