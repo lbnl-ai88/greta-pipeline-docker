@@ -5,47 +5,63 @@
 # Entries can be absolute, or, RELATIVE TO THE LOCATION
 # OF THIS FILE
 
-# yaml-language-server: $schema=./schemas/greta_schema.json
-
 static_inputs:
   static_input_root: static_inputs # resolved at runtime
-  crystal_data: crystal_data.csv
+  crystal_data: crystal_data_only_A35.csv
   detector_geometry_file: geometry_setup.dat
   signal_calculation_configuration: calc_signal_setup.dat
   drift_velocity_correction: drift_vel_tcorr.dat
+  cross_talk_parameters: pars669.txt
+  geant_simulation_points:
+    A: sel_sim_Atype_125.txt
+    B: sel_sim_Btype_124.txt
 
 results_root: output
 
 pipeline:
   - name: crystal_impurity_scaling
     routine: impurity_scaling
-    run: false
+    run: true
     results_path: impurity_scaling
     script_path: find_impurity_scaling.pl
     binary: f3d_gretina
+
   - routine: crystal_scaling_update
     # Processes final impurity scaling, updates crystals and writes final
     # field calc setup files in results_path
     run: true
+    input_step: crystal_impurity_scaling
     results_path: field_calc_setup
+
   - routine: calculate_fields_and_potentials
     # Runs the field and weighing potential routine one final time on the 
     # field calc setup files from the last step and places the results in 
     # results_path/CRYSTAL_NAME (i.e. results_path/A01)
     run: true
+    input_step: crystal_scaling_update
     results_path: fields
     binary: f3d_gretina
+
   - routine: calculate_basis_at_grid
     # Writes field_setup files that include the results of the previous step
     # and runs mkgrid for each crystal and places field setup and results in
     # results_path/CRYSTAL_NAME
     run: true
     results_path: basis_grid
+    input_step: calculate_fields_and_potentials
     binary: mkgrid
+
   - routine: calculate_pristine_basis
     # Combines the grid files and basis files into a single pristine (raw) 
     # basis file. Results path is currently unused; pristine raw basis files will
     # be placed in the output of the basis_grid step.
     run: true
+    input_step: calculate_basis_at_grid
     results_path: pristine_basis
     binary: grid+sig2basis
+
+  - routine: simulate_superpulse
+    run: true
+    results_path: simulated_superpulse
+    binary: intpt2tr
+    input_steps: [calculate_basis_at_grid, calculate_pristine_basis]

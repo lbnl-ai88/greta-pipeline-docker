@@ -30,7 +30,7 @@
             "items": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Optional name of the step if you do not want to use the routine name"},
+                    "name": { "type": "string", "description": "Optional UNIQUE name of the step if you do not want to use the routine name as the default"},
                     "routine": { 
                         "type": "string",
                         "enum": [
@@ -48,7 +48,8 @@
                         "description": "Boolean to determine if step is run. True will run the step, False will not."},
                     "results_path": { "type": "string", "description": "Directory path relative to `results_root` to store the results of this step."},
                     "binary": { "type": "string", "description": "Path of the binary to run for this step. Path is relative to binary_root, if set."}
-                }
+                },
+                "required": ["routine", "run"]
             }
         }
     }
