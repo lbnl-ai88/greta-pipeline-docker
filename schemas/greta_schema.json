@@ -13,7 +13,15 @@
                 "detector_geometry_file": { "type": "string", "description": "Path to detector geometry data file, generally named geometry_setup.dat."},
                 "signal_calculation_configuration": { "type": "string", "description": "Path to signal caculation configuration settings, generally named calc_signal_setup.dat." },
                 "drift_velocity_correction": { "type": "string", "description": "Path to drift velocity vector temperature correction, generally named drift_vel_tcorr.dat"},
-                "cross_talk_parameters": { "type": "string", "description": "Path to cross-talk-parameters file, generally called pars669.txt."}
+                "cross_talk_parameters": { "type": "string", "description": "Path to cross-talk-parameters file, generally called pars669.txt."},
+                "geant_simulation_points": {
+                    "type": "object",
+                    "description": "Simulation points from GEANT for different crystal types",
+                    "properties": {
+                        "A": { "type": "string", "description": "simulation points for crystal type A"},
+                        "B": { "type": "string", "description": "simulation points for crystal type B"}
+                    }
+                }
             }
         },
         "results_root": {
@@ -39,7 +47,8 @@
                             "calculate_fields_and_potentials",
                             "calculate_basis_at_grid",
                             "calculate_pristine_basis",
-                            "simulate_superpulse"
+                            "simulate_superpulse",
+                            "sum_and_shape_superpulse"
                             ],
                         "description": "Routine to run, limited to validated values" 
                         },
