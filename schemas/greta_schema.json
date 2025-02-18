@@ -47,8 +47,8 @@
                             "calculate_fields_and_potentials",
                             "calculate_basis_at_grid",
                             "calculate_pristine_basis",
-                            "simulate_superpulse",
-                            "sum_and_shape_superpulse"
+                            "generate_single_segment_traces",
+                            "shape_and_combine_traces"
                             ],
                         "description": "Routine to run, limited to validated values" 
                         },

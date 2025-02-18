@@ -60,8 +60,14 @@ pipeline:
     results_path: pristine_basis
     binary: grid+sig2basis
 
-  - routine: simulate_superpulse
+  - routine: generate_single_segment_traces
     run: true
     results_path: simulated_superpulse
     binary: intpt2tr
     input_steps: [calculate_basis_at_grid, calculate_pristine_basis]
+
+  - routine: shape_and_combine_traces
+    run: true
+    results_path: simulated_superpulse
+    input_step: generate_single_segment_traces
+    binary: sim_tr2sp
