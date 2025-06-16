@@ -7,7 +7,7 @@
 
 static_inputs:
   static_input_root: static_inputs # resolved at runtime
-  crystal_data: crystal_data_only_A35.csv
+  crystal_data: crystal_data.csv
   detector_geometry_file: geometry_setup.dat
   signal_calculation_configuration: calc_signal_setup.dat
   drift_velocity_correction: drift_vel_tcorr.dat
@@ -15,6 +15,7 @@ static_inputs:
   geant_simulation_points:
     A: sel_sim_Atype_125.txt
     B: sel_sim_Btype_124.txt
+  superpulse_measurements: superpulse/
 
 results_root: output
 
@@ -71,3 +72,12 @@ pipeline:
     results_path: simulated_superpulse
     input_step: generate_single_segment_traces
     binary: sim_tr2sp
+
+  - routine: fit_crosstalk
+    run: true
+    results_path: fit_crosstalk
+    input_step: shape_and_combine_traces
+    script_path: setup_nextiter.sh
+    binary: fit_sp
+    additional_parameters:
+      maximum_iterations: 4
